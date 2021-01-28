@@ -45,7 +45,7 @@ public class UserService {
         List<User> userList = new ArrayList<User>();
         for (LocalDate key : keys) {
             List<String> users = new ArrayList<>(userMap.get(key));
-            User user = new User(key, users);
+            User user = new User(key, users, users.size());
             System.out.println(key);
             userList.add(user);
         }
@@ -55,7 +55,7 @@ public class UserService {
     public Optional<User> mapDynamicObjToUserDTO(Map<LocalDate, Set<String>> userMap, LocalDate insertDate){
         List<User> userList = new ArrayList<User>();
         List<String> users = new ArrayList<>(userMap.get(insertDate));
-        User user = new User(insertDate, users);
+        User user = new User(insertDate, users, users.size());
         System.out.println(user);
         return Optional.of(user);
     }

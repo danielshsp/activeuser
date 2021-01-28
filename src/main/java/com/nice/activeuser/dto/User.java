@@ -1,5 +1,6 @@
 package com.nice.activeuser.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,9 +14,11 @@ import java.util.List;
 @AllArgsConstructor
 public class User implements Serializable {
     @JsonProperty("insertDate")
+    @JsonFormat(pattern="yyyy-MM-dd")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDate insertDate;
     private List<String> userName;
+    private Integer countUserActive;
 
 
 }
