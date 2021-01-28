@@ -6,7 +6,7 @@
 	
 	For simulation there is a suagger ui with three endpoint:
 		- /api/v1/user/{insertDate} - show the active user per daily ,the solution of the question
-		- /api/v1/user - I add them to show all the data include the grouping and special structal. there is option to refresh the cache by pass param that update him from subsystem
+		- /api/v1/user - I add them to show all the data include the grouping and special structal. there is option to refresh the cache by pass param that update him from the subsystem
 		- /api/v1/cache - clear the cache
 
 	more details in swagger UI.
