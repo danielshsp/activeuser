@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Chart.Name }}-service
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ .Chart.Name }}-service
+    type: spring-boot
+spec:
+  type: {{ .Values.service.activeuser.type }}
+  ports:
+    - name: http
+      port: {{ .Values.service.activeuser.port }}
+      targetPort: {{ .Values.service.activeuser.targetport }}
+  selector:
+    app: {{ .Chart.Name }}
+    release: {{ .Release.Name }}

@@ -1,0 +1,49 @@
+namespace: nice
+replicas:
+  niceactiveuser: 1
+
+apps:
+  name: activeuser
+
+host:
+  activeuser: activeuser.cloud.nice.com
+  staticIP: 1.2.3.5
+
+images:
+  activeuser:
+    repository: nice/activeuser
+    tag: latest
+    pullPolicy: Always
+
+
+service:
+  activeuser:
+    type: NodePort
+    port: 80
+    targetport: 8080
+
+spring:
+  activeuser:
+    config:
+      serverPort: 8080
+      pathFile: userfile.json
+
+resources:
+  limits:
+    monitor:
+      cpu: 500m
+      memory: 1024Mi
+    ic:
+      cpu: 2000m
+      memory: 1024Mi
+  requests:
+    monitor:
+      cpu: 150m
+      memory: 256Mi
+    ic:
+      cpu: 350m
+      memory: 256Mi
+
+tolerations: []
+
+affinity: {}

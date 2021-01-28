@@ -1,0 +1,66 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: {{ .Chart.Name }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ .Chart.Name }}
+    release: {{ .Release.Name }}
+    type: spring-boot
+spec:
+  replicas: {{ .Values.replicas.niceactiveuser }}
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}
+      release: {{ .Release.Name }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      annotations:
+        linkerd.io/inject: enabled
+        checksum/config: {{ include (print $.Template.BasePath "/configmap-user.yaml") . | sha256sum }}
+        checksum/secret: {{ include (print $.Template.BasePath "/secret-user.yaml") . | sha256sum }}
+      labels:
+        app: {{ .Chart.Name }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: {{ .Values.images.activeuser.repository }}:{{ .Values.images.activeuser.tag }}
+          ports:
+            - containerPort: {{ .Values.service.activeuser.targetport }}
+          imagePullPolicy: {{ .Values.images.activeuser.pullPolicy }}
+          livenessProbe:
+            httpGet:
+              port: {{ .Values.service.activeuser.targetport }}
+              path: /actuator/info
+            initialDelaySeconds: 30
+            timeoutSeconds: 10
+          readinessProbe:
+            httpGet:
+              port: {{ .Values.service.activeuser.targetport }}
+              path: /actuator/health
+            initialDelaySeconds: 30
+            timeoutSeconds: 10
+          envFrom:
+            - configMapRef:
+                name: {{ .Chart.Name }}-configmap
+          resources:
+            requests:
+              memory: "{{ .Values.resources.requests.ic.memory }}"
+              cpu: "{{ .Values.resources.requests.ic.cpu }}"
+            limits:
+              memory: "{{ .Values.resources.limits.ic.memory }}"
+              cpu: "{{ .Values.resources.limits.ic.cpu }}"
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 10
+      dnsPolicy: ClusterFirst
+      tolerations:
+        - key: "spring"
+          operator: "Equal"
+          value: "springboot"
+          effect: "NoExecute"
