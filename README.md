@@ -14,7 +14,8 @@
 	this concept allow the project to be more scale and effective in the runtime(O1), while the cache group the data entries to insertdate key.
 	
 Swagger endpoint:
-http://localhost:8083/swagger-ui.html
+	
+	http://localhost:8083/swagger-ui.html
 	
 	
 	
