@@ -13,6 +13,9 @@
 	The concept is to be in Lazy load pattern and no load all params in any request only while you need.
 	this concept allow the project to be more scale and effective in the runtime(O1), while the cache group the data entries to insertdate key.
 	
+Swagger endpoint:
+http://localhost:8083/swagger-ui.html
+	
 	
 	
 	
