@@ -4,7 +4,7 @@
 	This project contain soluton for search active user per daily .
 	Project design by MVC class diagram with most popular design pattarns(entity,dto,repository,service)
 	
-	For simulation there is a suagger ui with three endpoint:
+	For simulation below thw swagger endpoints:
 		- /api/v1/user/{insertDate} - show the active user per daily ,the solution of the question
 		- /api/v1/user - I add them to show all the data include the grouping and special structal. there is option to refresh the cache by pass param that update him from the subsystem
 		- /api/v1/cache - clear the cache
